@@ -35,7 +35,6 @@ export const purchaseBurger = (orderData, token) => {
         type: PURCHASE_BURGER_INIT,
         orderData: orderData,
         token: token
-        // token: localStorage.getItem('token') ? localStorage.getItem('token') : null
     }
 };
 

@@ -1,5 +1,5 @@
 import {delay} from 'redux-saga';
-import {put, call, select} from 'redux-saga/effects';
+import {put, select} from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import axios from "axios";
 import {createNotification} from '../../shared/notification';
@@ -9,7 +9,7 @@ const axiosHeader = {
 };
 
 export function* logoutSaga(action) {
-    yield call([localStorage, 'clear']);
+    // yield call([localStorage, 'clear']);
     yield put(actions.authLogoutSucceed());
 }
 
@@ -32,11 +32,12 @@ export function* authUserSaga(action) {
     }
     try {
         const resp = yield axios.post(urlBase + 'AIzaSyD10EGa7tlAFSqxhSzfqo1l8CnwXNW0AIg', authData);
-        yield put(actions.setLocalStorage(resp.data));
+        const expirationDate = yield new Date(new Date().getTime() + resp.data.expiresIn * 1000);
         let userData = {
             email: resp.data.email,
             token: resp.data.idToken,
-            id: resp.data.localId
+            id: resp.data.localId,
+            expirationDate: expirationDate
         };
         yield createNotification('success', 'Success logged in');
         yield put(actions.authSuccess(userData));
@@ -47,33 +48,24 @@ export function* authUserSaga(action) {
 }
 
 export function* authCheckStateSaga(action) {
-    const token = yield localStorage.getItem('token');
+    const state = yield select();
+    const token = yield state.auth.token;
     if (!token) {
         yield put(actions.authLogout());
     } else {
-        const expirationDate = yield new Date(localStorage.getItem('expirationDate'));
+        const expirationDate = yield new Date(state.auth.expirationDate);
         if (expirationDate < new Date()) {
             yield put(actions.authLogout());
         } else {
             yield put(actions.authSuccess({
-                email: yield JSON.parse(localStorage.getItem('user'))['email'],
-                token: yield localStorage.getItem('token'),
-                id: yield JSON.parse(localStorage.getItem('user'))['id'],
+                email: yield state.auth.email,
+                token: yield state.auth.token,
+                id: yield state.auth.userId,
             }));
             yield put(actions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
         }
 
     }
-}
-
-export function* setLocalStorageSaga(action) {
-    const expireDate = yield new Date(new Date().getTime() + action.data.expiresIn * 1000);
-    yield localStorage.setItem('token', action.data.token);
-    yield localStorage.setItem('user', JSON.stringify({
-        email: action.data.email,
-        id: action.data.id
-    }));
-    yield localStorage.setItem('expirationDate', expireDate);
 }
 
 export function* authEditEmailInitSaga(action) {
@@ -88,7 +80,6 @@ export function* authEditEmailInitSaga(action) {
     let urlBase = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=';
     try {
         const resp = yield axios.post(urlBase + 'AIzaSyD10EGa7tlAFSqxhSzfqo1l8CnwXNW0AIg', authData, axiosHeader);
-        // yield put(actions.setLocalStorage(resp.data));
         let userData = {
             email: resp.data.email,
             token: resp.data.idToken,
@@ -115,7 +106,6 @@ export function* authEditPasswordInitSaga(action) {
     let urlBase = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/setAccountInfo?key=';
     try {
         const resp = yield axios.post(urlBase + 'AIzaSyD10EGa7tlAFSqxhSzfqo1l8CnwXNW0AIg', authData, axiosHeader);
-        // yield put(actions.setLocalStorage(resp.data));
         let userData = {
             token: resp.data.idToken,
             email: resp.data.email,

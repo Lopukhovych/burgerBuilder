@@ -22,6 +22,4 @@ yarn-error.log*
 
 .idea
 .firebase
-public/
-scripts/
 package-lock.json

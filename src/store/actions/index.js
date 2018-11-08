@@ -13,7 +13,6 @@ export {
 export {
     onAuthUser,
     authStart,
-    setLocalStorage,
     authSuccess,
     authCheckState,
     authLogout,

@@ -30,13 +30,6 @@ export const checkAuthTimeout = (expireTime) => {
     return {type: actionTypes.AUTH_CHECK_TIMEOUT, expireTime: expireTime}
 };
 
-export const setLocalStorage = (data) => {
-    return {
-        type: actionTypes.SET_LOCAL_STORAGE,
-        data: data
-    };
-};
-
 export const onAuthUser = (email, password, authType) => {
     return {
         type: actionTypes.AUTH_USER,

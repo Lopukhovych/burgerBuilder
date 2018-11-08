@@ -7,7 +7,6 @@ import {
     checkAuthTimeoutSaga,
     authUserSaga,
     authCheckStateSaga,
-    setLocalStorageSaga,
     authEditEmailInitSaga,
     authEditPasswordInitSaga
 } from './auth';
@@ -19,7 +18,6 @@ export function* watchAuth() {
     yield takeEvery(actionTypes.AUTH_CHECK_TIMEOUT, checkAuthTimeoutSaga);
     yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga);
     yield takeEvery(actionTypes.AUTH_CHECK_INITIAL_STATE, authCheckStateSaga);
-    yield takeEvery(actionTypes.SET_LOCAL_STORAGE, setLocalStorageSaga);
     yield takeEvery(actionTypes.AUTH_EDIT_EMAIL_INIT, authEditEmailInitSaga);
     yield takeEvery(actionTypes.AUTH_EDIT_PASSWORD_INIT, authEditPasswordInitSaga);
 }

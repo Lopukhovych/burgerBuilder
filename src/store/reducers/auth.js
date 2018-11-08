@@ -12,6 +12,7 @@ export const initialState = {
     loading: false,
     error: null,
     authRedirectPath: '/',
+    expirationDate: null,
 };
 
 const authStart = (state, action) => {
@@ -27,6 +28,7 @@ const authSuccess = (state, action) => {
         token: action.authData.token,
         userId: action.authData.id,
         email: action.authData.email,
+        expirationDate: action.authData.expirationDate
     });
 };
 
@@ -41,7 +43,8 @@ const authLogout = (state, action) => {
     return updateObject(state, {
         token: null,
         userId: null,
-        email: null
+        email: null,
+        expirationDate: null
     })
 };
 
