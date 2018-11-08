@@ -1,0 +1,19 @@
+.CheckoutSummary {
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+
+.titleMargin {
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+@media screen and (min-width: 600px) {
+    .CheckoutSummary {
+        width: 100%
+    }
+    .titleMargin {
+        font-size: 1.2rem;
+    }
+}

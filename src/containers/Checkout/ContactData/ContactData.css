@@ -1,0 +1,22 @@
+.ContactData {
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+}
+
+.Loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 260px;
+    text-align: center;
+}
+.Loading span {
+    color: #d68135;
+}
+
+@media (min-width: 600px) {
+    .ContactData {
+        width: 500px;
+    }
+}

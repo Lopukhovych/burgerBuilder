@@ -1,0 +1,45 @@
+.NavigationItems {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+/*.UserEmailBlock {*/
+    /*padding: 5px 2px;*/
+    /*cursor: pointer;*/
+    /*display: flex;*/
+/*}*/
+
+.UserEmail{
+    display: flex;
+    align-items: center;
+}
+.UserEmail span{
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width:100px;
+    margin: 5px 0 8px;
+    box-sizing: border-box;
+    display: block;
+}
+
+@media screen and (min-width: 500px) {
+    .NavigationItems {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        height: 100%;
+        min-width: 350px;
+        justify-content: flex-end;
+
+    }
+}

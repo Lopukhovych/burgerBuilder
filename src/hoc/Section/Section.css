@@ -1,0 +1,12 @@
+.Section {
+    width: 98%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 1400px) {
+    .Section{
+        width: 80%;
+        max-width: 1300px;
+        padding: 0;
+    }
+}

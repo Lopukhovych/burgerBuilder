@@ -1,0 +1,38 @@
+.Item{
+    cursor: pointer;
+}
+
+.Profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 3% 0 5%;
+}
+
+.UserLogo {
+    width: 15%;
+    height: auto;
+    margin: 25px 0 20px;
+}
+
+.Credentials {
+    width: 25%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+.Credentials > div {
+    padding: 5px;
+}
+.ChangePasswordArticle {
+    cursor: pointer;
+}
+.WarningMessage {
+    color: rgba(255, 193, 7, 1);
+}
+.PasswordsErrorMessage {
+    display: block;
+    color: rgba(255, 193, 7, 1);
+    margin-top: 5px;
+    font-size: 12px;
+}

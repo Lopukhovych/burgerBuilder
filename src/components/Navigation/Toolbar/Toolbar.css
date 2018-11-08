@@ -1,0 +1,53 @@
+header {
+    background-color: #703B09;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+}
+.Toolbar {
+    height: 56px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 1;
+    color: #fff;
+}
+
+.ToolbarItem{
+    padding: 0 2%;
+}
+
+.Toolbar nav {
+    height: 100%;
+}
+
+.Logo {
+    height: 98%;
+}
+
+@media screen and (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
+}
+@media screen and (min-width: 761px) {
+    .Toolbar {
+        padding: 1px 2% 0 10%;
+        margin: 0 auto;
+        justify-content: space-between;
+    }
+}
+@media screen and (min-width: 1400px) {
+    .Toolbar {
+        width: 80%;
+        max-width: 1300px;
+        padding: 1px 2% 0 ;
+        margin: 0 auto;
+        justify-content: space-between;
+    }
+}
