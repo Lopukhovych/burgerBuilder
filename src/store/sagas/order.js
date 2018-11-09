@@ -6,6 +6,7 @@ import {createNotification} from '../../shared/notification';
 
 export function* purchaseBurgerInitSaga(action) {
     yield put(actions.purchaseBurgerStart());
+    console.log('action.orderData: ', action.orderData);
     try {
         const response = yield axios.post('/orders.json?auth=' + action.token, action.orderData);
         yield put(actions.purchaseBurgerSuccess(response.data.name, action.orderData));
@@ -22,6 +23,7 @@ export function* fetchOrdersSaga(action) {
     const queryParams = `?auth=${action.token}&orderBy="userId"&equalTo="${action.userId}"`;
     try {
         const resp = yield axios.get('orders.json' + queryParams);
+        console.log('resp: ', resp.data);
         let fetchedOrders = [];
         for (const key in resp.data) {
             yield fetchedOrders.push({
@@ -29,6 +31,9 @@ export function* fetchOrdersSaga(action) {
                 id: key
             });
         }
+        fetchedOrders.forEach((item) => {
+            item.ingredients = item.ingredients.split(',');
+        });
         yield put(actions.fetchOrdersSuccess(fetchedOrders));
     } catch (error) {
         yield put(actions.fetchOrdersFail(error));

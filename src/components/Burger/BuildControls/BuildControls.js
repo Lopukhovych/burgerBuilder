@@ -4,14 +4,9 @@ import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
 
 
-const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 const buildControls = (props) => {
     let newControls = Object.keys(props.ingredientsList ? props.ingredientsList : {}).map((item) => {
         return {
-            label: capitalizeFirstLetter(item),
             type: item,
             count: 0
         }
@@ -26,10 +21,10 @@ const buildControls = (props) => {
     }
     return (
         <div className={classes.BuildControls}>
-            {newControls.map((ctrl) => {
+            {newControls.map((ctrl, i) => {
                 return <BuildControl
-                    key={ctrl.label}
-                    label={ctrl.label}
+                    key={ctrl.type + i }
+                    label={ctrl.type}
                     disabled={ctrl.count <= 0}
                     addIngredient={() => props.addIngredient(ctrl.type)}
                     removeIngredient={() => props.removeIngredient(ctrl.type)}

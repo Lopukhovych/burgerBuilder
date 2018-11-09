@@ -18,7 +18,7 @@ class Orders extends Component {
 
     render() {
         let orders = <Spinner/>;
-
+        console.log(111, this.props.orders);
 
         if (!this.props.loading && this.props.orders && this.props.orders.length === 0) {
             orders = <div className={classes.Empty}>
@@ -48,7 +48,6 @@ class Orders extends Component {
 
         return (
             <div className={['container', 'pt-2', classes.Orders].join(' ')}>
-
                 {orders}
             </div>
         );

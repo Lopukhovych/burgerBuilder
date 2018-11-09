@@ -7,3 +7,11 @@
     margin: 10px auto;
     cursor: pointer;
 }
+.IngredientItem {
+    text-transform: capitalize;
+    display: inline-block;
+    margin: 0 5px;
+    border: 1px solid #d68135;
+    padding: 1px 5px;
+    cursor: pointer;
+}

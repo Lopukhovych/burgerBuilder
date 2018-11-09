@@ -12,14 +12,8 @@ const order = (props) => {
         });
     }
     let ingredientsOutput = ingredients.map(ig => {
-        return <span style={{
-            textTransform: 'capitalize',
-            display: 'inline-block',
-            margin: '0 5px',
-            border: '1px solid #d68135',
-            padding: '1px 5px'
-        }} key={ig.name}>
-            {ig.name} {ig.value}
+        return <span className={classes.IngredientItem} key={ig.name}>
+            {ig.value}
         </span>
     });
     return (

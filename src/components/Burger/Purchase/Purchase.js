@@ -7,10 +7,6 @@ import Aux from "../../../hoc/Aux/Aux";
 import Button from "../../UI/Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
 
-const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 class Purchase extends React.Component {
     constructor(props) {
         super(props);
@@ -57,7 +53,7 @@ class Purchase extends React.Component {
         let ingredientsList = Object.keys(orderIngredients).map(item => {
             return (
                 <div key={item} className='d-flex justify-content-around'>
-                    <p>{capitalizeFirstLetter(item)}</p>
+                    <p className={"text-capitalize"}>{item}</p>
                     <p>{orderIngredients[item]}</p>
                 </div>
             );
