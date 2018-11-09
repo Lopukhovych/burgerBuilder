@@ -1,44 +1,59 @@
-import {
-    ADD_INGREDIENT,
-    REMOVE_INGREDIENT,
-    LOAD_INGREDIENTS,
-    LOAD_INGREDIENTS_FAILED,
-    INIT_LOAD_INGREDIENTS
-} from './actionTypes';
+import * as actionTypes from './actionTypes';
 
 
-export const addIngredient = (name) => {
+export const addIngredientInit = (name) => {
     return {
-        type: ADD_INGREDIENT,
+        type: actionTypes.ADD_INGREDIENT_INIT,
         ingredientName: name
     }
 };
-
-export const removeIngredient = (name) => {
+export const addIngredient = (updatedIngredientsList, totalPrice) => {
     return {
-        type: REMOVE_INGREDIENT,
+        type: actionTypes.ADD_INGREDIENT,
+        updatedIngredientsList: updatedIngredientsList,
+        totalPrice: totalPrice
+    }
+};
+
+export const removeIngredientInit = (name) => {
+    return {
+        type: actionTypes.REMOVE_INGREDIENT_INIT,
         ingredientName: name
+    }
+};
+export const removeIngredient = (updatedIngredientsList, totalPrice) => {
+    return {
+        type: actionTypes.REMOVE_INGREDIENT,
+        updatedIngredientsList: updatedIngredientsList,
+        totalPrice: totalPrice
     }
 };
 
 export const setIngredients = (ing) => {
+    // console.log('orderIngredients: ', ing);
     return {
-        type: LOAD_INGREDIENTS,
+        type: actionTypes.LOAD_INGREDIENTS,
         ingredients: ing,
 
     }
 };
 
-export const loadIngredietsFailed = (err) => {
+export const loadIngredientsFailed = (err) => {
     return {
-        type: LOAD_INGREDIENTS_FAILED,
+        type: actionTypes.LOAD_INGREDIENTS_FAILED,
         error: err
     }
 };
 
 export const loadIngredients = () => {
     return {
-        type: INIT_LOAD_INGREDIENTS
+        type: actionTypes.INIT_LOAD_INGREDIENTS
+    };
+};
+
+export const resetIngredients = () => {
+    return {
+        type: actionTypes.RESET_INGREDIENTS
     };
 };
 

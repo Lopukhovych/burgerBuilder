@@ -27,37 +27,27 @@ export class BurgerBuilder extends React.Component {
 
 
     updatePurchaseStatus(updatedIngredients) {
-        const ingredientsAmount = Object.keys({...updatedIngredients}).reduce((acc, item) => {
-            return acc + updatedIngredients[item];
-        }, 0);
+        const ingredientsAmount = updatedIngredients.length;
         return ingredientsAmount > 0;
     }
 
     render() {
-        const disabledInfo = {
-            ...this.props.ing
-        };
-
-        for (let key in disabledInfo) {
-            disabledInfo[key] = disabledInfo[key] < 1
-        }
-        // if (this.props.)
 
         let burger = <Spinner/>;
-        if (this.props.ing) {
+        if (this.props.orderIngredients) {
             burger = (<Aux>
-                <Burger ingredients={this.props.ing}/>
+                <Burger ingredients={this.props.orderIngredients}/>
                 <BuildControls
                     removeIngredient={this.props.onIngredientRemove}
                     addIngredient={this.props.onIngredientAdd}
-                    ingredients={this.props.ing}
-                    disabled={disabledInfo}
+                    orderIngredients={this.props.orderIngredients}
+                    ingredientsList={this.props.ingredientsList}
                 />
                 <Purchase
                     onInitPurchase={this.props.onInitPurchase}
                     loading={this.state.loading}
-                    ingredients={this.props.ing}
-                    purchasable={this.updatePurchaseStatus(this.props.ing)}
+                    ingredients={this.props.orderIngredients}
+                    purchasable={this.updatePurchaseStatus(this.props.orderIngredients)}
                     totalPrice={this.props.totalPrice.toFixed(2)}
                     userEmail={this.props.userEmail}
                     onSetAuthRedirectPath={this.props.onSetAuthRedirectPath}
@@ -84,8 +74,9 @@ export class BurgerBuilder extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ing: state.burgerBuilder.ingredients,
-        totalPrice: state.burgerBuilder.totalPrice,
+        orderIngredients: state.burgerBuilder.orderIngredientsList,
+        ingredientsList: state.burgerBuilder.ingredients,
+        totalPrice: state.burgerBuilder.totalPrice ? state.burgerBuilder.totalPrice : 4,
         error: state.burgerBuilder.error,
         userEmail: state.auth.email
     }
@@ -94,8 +85,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLoadIngredients: () => dispatch(actions.loadIngredients()),
-        onIngredientAdd: (ingName) => dispatch(actions.addIngredient(ingName)),
-        onIngredientRemove: (ingName) => dispatch(actions.removeIngredient(ingName)),
+        onIngredientAdd: (ingName) => dispatch(actions.addIngredientInit(ingName)),
+        onIngredientRemove: (ingName) => dispatch(actions.removeIngredientInit(ingName)),
         onInitPurchase: () => dispatch(actions.purchaseInit()),
         onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     };

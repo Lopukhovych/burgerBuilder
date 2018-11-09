@@ -1,15 +1,19 @@
 import {put} from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import axios from '../../axios-orders';
+import {createNotification} from '../../shared/notification';
 
-export function* purchaseBurgerSaga(action) {
+
+export function* purchaseBurgerInitSaga(action) {
     yield put(actions.purchaseBurgerStart());
     try {
-        yield console.log('purchaseBurgerSaga:', action.token);
         const response = yield axios.post('/orders.json?auth=' + action.token, action.orderData);
         yield put(actions.purchaseBurgerSuccess(response.data.name, action.orderData));
+        yield createNotification('success', 'Order was successfully sent!');
+        yield put(actions.resetIngredients());
     } catch (error) {
         yield put(actions.purchaseBurgerFail());
+        yield createNotification('error','Error', 'Error with sending order!');
     }
 }
 

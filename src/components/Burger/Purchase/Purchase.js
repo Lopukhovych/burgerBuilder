@@ -7,6 +7,9 @@ import Aux from "../../../hoc/Aux/Aux";
 import Button from "../../UI/Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
 
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 class Purchase extends React.Component {
     constructor(props) {
@@ -43,11 +46,19 @@ class Purchase extends React.Component {
     };
 
     render() {
-        let ingredientsList = Object.keys(this.props.ingredients).map(item => {
+        let orderIngredients = {};
+        this.props.ingredients.forEach((item) => {
+            if (item in orderIngredients) {
+                orderIngredients[item] += 1;
+            } else {
+                orderIngredients[item] = 1;
+            }
+        });
+        let ingredientsList = Object.keys(orderIngredients).map(item => {
             return (
                 <div key={item} className='d-flex justify-content-around'>
-                    <p>{item}</p>
-                    <p>{this.props.ingredients[item]}</p>
+                    <p>{capitalizeFirstLetter(item)}</p>
+                    <p>{orderIngredients[item]}</p>
                 </div>
             );
         });

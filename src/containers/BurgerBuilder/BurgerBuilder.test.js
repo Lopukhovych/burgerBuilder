@@ -15,7 +15,7 @@ describe('<BurgerBuilder/>', () => {
         wrapper = shallow(<BurgerBuilder onLoadIngredients={()=>{}}/>);
     });
     it('should contain <Burger>, <BuildControls> and <Purchase> when receiving ingredients', () => {
-        wrapper.setProps({ing: {salad: 0}, totalPrice: 0});
+        wrapper.setProps({orderIngredients: {salad: 0}, totalPrice: 0});
         expect(wrapper.find(BuildControls)).toHaveLength(1);
         expect(wrapper.find(Burger)).toHaveLength(1);
         expect(wrapper.find(Purchase)).toHaveLength(1);

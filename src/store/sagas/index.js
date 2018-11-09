@@ -10,8 +10,8 @@ import {
     authEditEmailInitSaga,
     authEditPasswordInitSaga
 } from './auth';
-import {loadIngredientsSaga} from './burgerBuilder';
-import {purchaseBurgerSaga, fetchOrdersSaga} from './order';
+import {loadIngredientsSaga, addIngredientInitSaga, removeIngredientInitSaga} from './burgerBuilder';
+import {purchaseBurgerInitSaga, fetchOrdersSaga} from './order';
 
 export function* watchAuth() {
     yield takeEvery(actionTypes.AUTH_USER, authUserSaga);
@@ -24,11 +24,13 @@ export function* watchAuth() {
 
 export function* watchBurgerBuilder() {
     yield takeEvery(actionTypes.INIT_LOAD_INGREDIENTS, loadIngredientsSaga);
+    yield takeEvery(actionTypes.ADD_INGREDIENT_INIT, addIngredientInitSaga);
+    yield takeEvery(actionTypes.REMOVE_INGREDIENT_INIT, removeIngredientInitSaga);
 }
 
 export function* watchOrder() {
     yield takeEvery(actionTypes.FETCH_ORDERS_INIT, fetchOrdersSaga);
-    yield takeEvery(actionTypes.PURCHASE_BURGER_INIT, purchaseBurgerSaga);
+    yield takeEvery(actionTypes.PURCHASE_BURGER_INIT, purchaseBurgerInitSaga);
 }
 
 

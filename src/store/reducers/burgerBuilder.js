@@ -3,41 +3,26 @@ import {updateObject} from '../../shared/utility';
 
 const BASIC_BURGER_PRICE = 4;
 
-
 const initialState = {
     ingredients: null,
+    orderIngredientsList: [],
     totalPrice: BASIC_BURGER_PRICE,
     error: null,
     building: false
 };
 
-const INGREDIENT_PRICES = {
-    meat: 1.3,
-    salad: 0.5,
-    cheese: 0.4,
-    bacon: 0.7
-};
 const addIngredient = (state, action) => {
-    const updatedIngredient = {
-        [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-    };
-    const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
     return updateObject(state, {
-        ingredients: updatedIngredients,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        orderIngredientsList: action.updatedIngredientsList,
+        totalPrice: action.totalPrice,
         building: true
     });
 };
 
 const removeIngredient = (state, action) => {
-    if (state.ingredients[action.ingredientName] <= 0) {
-        return state;
-    }
-    const updatedIng = {[action.ingredientName]: state.ingredients[action.ingredientName] - 1};
-    const updatedIngs = updateObject(state.ingredients, updatedIng);
     return updateObject(state, {
-        ingredients: updatedIngs,
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        orderIngredientsList: action.updatedIngredientsList,
+        totalPrice: action.totalPrice,
         building: true
     });
 };
@@ -46,13 +31,21 @@ const loadIngredients = (state, action) => {
     return updateObject(state, {
         ingredients: action.ingredients,
         error: false,
-        totalPrice: BASIC_BURGER_PRICE,
         building: false
     });
 };
 
 const loadIngredientsFailed = (state, action) => {
     return updateObject(state, {error: action.error});
+};
+
+const resetIngredientsState = (state, action) => {
+    return updateObject(state, {
+        orderIngredientsList: [],
+        totalPrice: BASIC_BURGER_PRICE,
+        error: null,
+        building: false
+    });
 };
 
 const burgerBuilder = (state = initialState, action) => {
@@ -65,6 +58,8 @@ const burgerBuilder = (state = initialState, action) => {
             return loadIngredients(state, action);
         case actionTypes.LOAD_INGREDIENTS_FAILED:
             return loadIngredientsFailed(state, action);
+        case actionTypes.RESET_INGREDIENTS:
+            return resetIngredientsState(state, action);
         default:
             return state;
     }

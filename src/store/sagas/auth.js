@@ -11,6 +11,7 @@ const axiosHeader = {
 export function* logoutSaga(action) {
     // yield call([localStorage, 'clear']);
     yield put(actions.authLogoutSucceed());
+    yield put(actions.resetIngredients())
 }
 
 

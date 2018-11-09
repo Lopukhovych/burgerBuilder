@@ -30,7 +30,8 @@ export const purchaseBurgerStart = () => {
     }
 };
 
-export const purchaseBurger = (orderData, token) => {
+export const purchaseBurgerInit = (orderData, token) => {
+    console.log('orderData: ', orderData);
     return {
         type: PURCHASE_BURGER_INIT,
         orderData: orderData,

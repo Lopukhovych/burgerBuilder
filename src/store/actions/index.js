@@ -1,6 +1,15 @@
-export {addIngredient, setIngredients, loadIngredietsFailed, removeIngredient, loadIngredients} from './burgerBuilder';
 export {
-    purchaseBurger,
+    addIngredientInit,
+    addIngredient,
+    setIngredients,
+    loadIngredientsFailed,
+    removeIngredientInit,
+    removeIngredient,
+    loadIngredients,
+    resetIngredients
+}from './burgerBuilder';
+export {
+    purchaseBurgerInit,
     purchaseInit,
     purchaseBurgerSuccess,
     purchaseBurgerFail,
