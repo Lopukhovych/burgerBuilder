@@ -1,7 +1,7 @@
 # Custom Burger Builder
 ## Allows you:
   - Create your custom burger
-  - Order it
+  - Order a burger
   - Look your orders and order ready burgers
   - Ask fo help
 
