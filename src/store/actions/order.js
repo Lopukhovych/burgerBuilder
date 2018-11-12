@@ -30,12 +30,10 @@ export const purchaseBurgerStart = () => {
     }
 };
 
-export const purchaseBurgerInit = (orderData, token) => {
-    console.log('orderData: ', orderData);
+export const purchaseBurgerInit = (orderData) => {
     return {
         type: PURCHASE_BURGER_INIT,
         orderData: orderData,
-        token: token
     }
 };
 
@@ -67,10 +65,9 @@ export const fetchOrdersStart = () => {
 
 };
 
-export const fetchOrders = (token, userId) => {
+export const fetchOrders = ( userId) => {
     return {
         type: FETCH_ORDERS_INIT,
-        token: token,
         userId: userId
     };
 };

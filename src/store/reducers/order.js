@@ -1,10 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../shared/utility';
+import storage from "redux-persist/lib/storage";
+import {persistReducer} from "redux-persist";
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+
 
 const initialState = {
     orders: [],
-    loading: false,
     purchased: false,
+    loading: false,
     error: false
 };
 
@@ -72,4 +76,11 @@ const orderReducer = (state = initialState, action) => {
     }
 };
 
-export default orderReducer;
+const persistConfig = {
+    key: 'order',
+    storage: storage,
+    blacklist: ['loading', 'error'],
+    stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
+};
+export default persistReducer(persistConfig, orderReducer);
+

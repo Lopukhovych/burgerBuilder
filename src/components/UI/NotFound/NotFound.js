@@ -5,6 +5,8 @@ const notFound = () => {
         <div className='container pt-2 text-center'>
             <h2>404 Invalid Url</h2>
             <Link to='/'>Main</Link>
+            <br/>
+            <Link to='/auth'>Log In</Link>
         </div>
     );
 };

@@ -1,17 +1,17 @@
 import {delay} from 'redux-saga';
-import {put, select} from 'redux-saga/effects';
+import {put, select, takeEvery} from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import axios from "axios";
 import {createNotification} from '../../shared/notification';
+import * as actionTypes from "../actions/actionTypes";
 
 const axiosHeader = {
     headers: {"Content-Type": "application/json"}
 };
 
-export function* logoutSaga(action) {
-    // yield call([localStorage, 'clear']);
+export function* logoutSaga() {
     yield put(actions.authLogoutSucceed());
-    yield put(actions.resetIngredients())
+    yield put(actions.burgerResetIngredients());
 }
 
 
@@ -40,7 +40,12 @@ export function* authUserSaga(action) {
             id: resp.data.localId,
             expirationDate: expirationDate
         };
-        yield createNotification('success', 'Success logged in');
+        if (action.authType === 'signin') {
+            yield createNotification('success', 'Success logged in!');
+        } else {
+            yield createNotification('success', 'Success signed up!');
+
+        }
         yield put(actions.authSuccess(userData));
         yield put(actions.checkAuthTimeout(resp.data.expiresIn));
     } catch (error) {
@@ -72,7 +77,6 @@ export function* authCheckStateSaga(action) {
 export function* authEditEmailInitSaga(action) {
     const state = yield select();
     console.log('new Email: ', action.email);
-    console.log('stateSaga: ', state.auth.token);
     let authData = JSON.stringify({
         idToken: state.auth.token,
         email: action.email,
@@ -91,7 +95,7 @@ export function* authEditEmailInitSaga(action) {
         yield put(actions.checkAuthTimeout(resp.data.expiresIn));
     } catch (error) {
         yield put(actions.authEditEmailFail(error));
-        yield createNotification('error','Error', 'Error with changing email!');
+        yield createNotification('error', 'Error', 'Error with changing email!');
     }
 }
 
@@ -117,7 +121,16 @@ export function* authEditPasswordInitSaga(action) {
         yield put(actions.checkAuthTimeout(resp.data.expiresIn));
     } catch (error) {
         yield put(actions.authEditPasswordFail(error));
-        yield createNotification('error','Error', 'Error with changing email!');
+        yield createNotification('error', 'Error', 'Error with changing email!');
     }
 
+}
+
+export function* watchAuth() {
+    yield takeEvery(actionTypes.AUTH_USER, authUserSaga);
+    yield takeEvery(actionTypes.AUTH_CHECK_TIMEOUT, checkAuthTimeoutSaga);
+    yield takeEvery(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga);
+    yield takeEvery(actionTypes.AUTH_CHECK_INITIAL_STATE, authCheckStateSaga);
+    yield takeEvery(actionTypes.AUTH_EDIT_EMAIL_INIT, authEditEmailInitSaga);
+    yield takeEvery(actionTypes.AUTH_EDIT_PASSWORD_INIT, authEditPasswordInitSaga);
 }

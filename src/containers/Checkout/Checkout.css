@@ -1,4 +1,4 @@
-.CheckoutSummary {
+.Checkout {
     text-align: center;
     width: 100%;
     margin: auto;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (min-width: 600px) {
-    .CheckoutSummary {
+    .Checkout {
         width: 100%
     }
     .titleMargin {

@@ -38,3 +38,8 @@
     color: red;
     font-size: 11px;
 }
+.Textarea {
+    height: 150px;
+    width: 100%;
+    resize: none;
+}

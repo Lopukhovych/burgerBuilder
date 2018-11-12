@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {withRouter} from 'react-router-dom';
 import classes from './Order.css';
 
 const order = (props) => {
@@ -17,11 +17,11 @@ const order = (props) => {
         </span>
     });
     return (
-        <div className={classes.Order}>
+        <div className={classes.Order} onClick={() => { props.history.push(`${props.location.pathname}/${props.index}`) }}>
             <p>Ingredients: {ingredientsOutput}</p>
             <p>Price: <strong>USD {props.price.toFixed(2)}</strong></p>
         </div>
     );
 };
 
-export default order;
+export default withRouter(order);

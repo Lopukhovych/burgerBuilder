@@ -1,6 +1,9 @@
 import {put, select} from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import axios from '../../axios-orders';
+import {takeEvery} from 'redux-saga/effects';
+import * as actionTypes from "../actions/actionTypes";
+
 
 const BASIC_BURGER_PRICE = 4.0;
 
@@ -20,9 +23,9 @@ const countTotalPrice = (updatedIngredientsList) => {
 export function* loadIngredientsSaga(action) {
     try {
         const response = yield axios.get('/ingredients.json');
-        yield put(actions.setIngredients(response.data));
+        yield put(actions.burgerLoadIngredients(response.data));
     } catch (error) {
-        yield put(actions.loadIngredientsFailed(error));
+        yield put(actions.burgerLoadIngredientsFailed(error));
     }
 }
 
@@ -30,7 +33,7 @@ export function* addIngredientInitSaga(action) {
     const state = yield select();
     const updatedOrderIngredientsList = [action.ingredientName, ...state.burgerBuilder.orderIngredientsList];
     const totalPrice = countTotalPrice(updatedOrderIngredientsList);
-    yield put(actions.addIngredient(updatedOrderIngredientsList, totalPrice));
+    yield put(actions.burgerAddIngredient(updatedOrderIngredientsList, totalPrice));
 }
 
 export function* removeIngredientInitSaga(action) {
@@ -40,5 +43,12 @@ export function* removeIngredientInitSaga(action) {
         updatedOrderIngredientsList.splice(state.burgerBuilder.orderIngredientsList.indexOf(action.ingredientName), 1);
     }
     const totalPrice = countTotalPrice(updatedOrderIngredientsList);
-    yield put(actions.addIngredient(updatedOrderIngredientsList, totalPrice));
+    yield put(actions.burgerAddIngredient(updatedOrderIngredientsList, totalPrice));
+}
+
+
+export function* watchBurgerBuilder() {
+    yield takeEvery(actionTypes.INIT_LOAD_INGREDIENTS, loadIngredientsSaga);
+    yield takeEvery(actionTypes.ADD_INGREDIENT_INIT, addIngredientInitSaga);
+    yield takeEvery(actionTypes.REMOVE_INGREDIENT_INIT, removeIngredientInitSaga);
 }

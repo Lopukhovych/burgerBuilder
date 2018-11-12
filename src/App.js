@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -10,8 +10,6 @@ import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/index';
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import {NotificationContainer} from 'react-notifications';
-
-
 
 const asyncCheckout = asyncComponent(() => {
     return import ('./containers/Checkout/Checkout');
@@ -25,33 +23,40 @@ const asyncAuth = asyncComponent(() => {
 const asyncProfile = asyncComponent(() => {
     return import ('./containers/Profile/Profile');
 });
+const asyncOrderItem = asyncComponent(() => {
+    return import ('./containers/Orders/OrderItem/OrderItem');
+});
+const asyncHelp = asyncComponent(() => {
+    return import ('./containers/Help/Help');
+});
+
+const AuthedRoutes = () => {
+    return (
+        <Fragment>
+            <Route path='/orders' exact component={asyncOrders}/>
+            <Route path='/orders/:order' component={asyncOrderItem}/>
+            <Route path='/logout' exact component={Logout}/>
+            <Route path='/checkout' component={asyncCheckout}/>
+            <Route path='/profile' exact component={asyncProfile}/>
+        </Fragment>)
+};
 
 class App extends Component {
     componentDidMount() {
-        // this.props.onCheckAuth();
+        this.props.onCheckAuth();
     }
 
     render() {
         let router = (
             <Switch>
-                <Route path='/auth' exact component={asyncAuth}/>
                 <Route path='/' exact component={BurgerBuilder}/>
+                <Route path='/auth' exact component={asyncAuth}/>
+                <Route path='/help' exact component={asyncHelp}/>
+                {this.props.isAuthenticated ? <AuthedRoutes/> : null}
                 <Route path="*" component={NotFound}/>
             </Switch>
         );
-        if (this.props.isAuthenticated) {
-            router = (
-                <Switch>
-                    <Route path='/' exact component={BurgerBuilder}/>
-                    <Route path='/checkout' component={asyncCheckout}/>
-                    <Route path='/orders' exact component={asyncOrders}/>
-                    <Route path='/profile' exact component={asyncProfile}/>
-                    <Route path='/logout' exact component={Logout}/>
-                    <Route path='/auth' exact component={asyncAuth}/>
-                    <Route path="*" component={NotFound}/>
-                </Switch>
-            );
-        }
+
         return (
             <div>
                 <Layout>

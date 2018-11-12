@@ -13,12 +13,11 @@ import Aux from '../../hoc/Aux/Aux';
 class Orders extends Component {
 
     componentDidMount() {
-        this.props.onFetchOrders(this.props.token, this.props.userId);
+        this.props.onFetchOrders(this.props.userId);
     }
 
     render() {
         let orders = <Spinner/>;
-        console.log(111, this.props.orders);
 
         if (!this.props.loading && this.props.orders && this.props.orders.length === 0) {
             orders = <div className={classes.Empty}>
@@ -29,9 +28,10 @@ class Orders extends Component {
             orders = (
                 <Aux>
                     <h3>My orders: </h3>
-                    {this.props.orders.map(order => (
+                    {this.props.orders.map((order, index) => (
                         <Order
                             key={order.id}
+                            index={index}
                             ingredients={order.ingredients}
                             price={+order.price}
                         />
@@ -59,14 +59,13 @@ const mapStateToProps = (state) => {
         orders: state.order.orders,
         error: state.order.error,
         loading: state.order.loading,
-        token: state.auth.token,
         userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onFetchOrders: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
+        onFetchOrders: (userId) => dispatch(actions.fetchOrders(userId)),
     }
 };
 

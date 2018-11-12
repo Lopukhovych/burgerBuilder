@@ -72,10 +72,8 @@ class Profile extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log('nextProps: ', nextProps.email === this.props.email);
         if (nextProps.token !== this.props.token) {
             this.resetForm();
-            console.log('dddd');
         }
         return true;
     }
@@ -108,7 +106,6 @@ class Profile extends Component {
     };
     onEditEmail = () => {
         this.props.onChangeEmail(this.state.editForm.email.value);
-        console.log(this.state.editForm.email.value);
     };
 
     onEditPassword = () => {

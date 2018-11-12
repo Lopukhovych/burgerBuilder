@@ -1,12 +1,12 @@
 export {
-    addIngredientInit,
-    addIngredient,
-    setIngredients,
-    loadIngredientsFailed,
-    removeIngredientInit,
-    removeIngredient,
-    loadIngredients,
-    resetIngredients
+    burgerAddIngredientInit,
+    burgerAddIngredient,
+    burgerLoadIngredients,
+    burgerLoadIngredientsFailed,
+    burgerRemoveIngredientInit,
+    burgerRemoveIngredient,
+    burgerLoadIngredientsInit,
+    burgerResetIngredients
 }from './burgerBuilder';
 export {
     purchaseBurgerInit,
@@ -36,3 +36,7 @@ export {
     authEditPassword,
     authEditPasswordFail
 } from './auth';
+
+export {
+    helpMessageInit
+} from './help';

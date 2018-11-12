@@ -1,5 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../../shared/utility';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 const BASIC_BURGER_PRICE = 4;
 
@@ -65,4 +68,11 @@ const burgerBuilder = (state = initialState, action) => {
     }
 };
 
-export default burgerBuilder;
+const persistConfig = {
+    key: 'burger',
+    storage: storage,
+    blacklist: ['error', 'building'],
+    stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
+};
+export default persistReducer(persistConfig, burgerBuilder);
+
