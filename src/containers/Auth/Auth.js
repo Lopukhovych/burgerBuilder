@@ -47,6 +47,9 @@ class Auth extends Component {
             },
             formIsValid: false
         };
+        /*
+                Лучше логику с валидацией, єррор меседжем и прочей фигней засунуть в отдельный конфиг файл
+         */
     }
 
     componentDidMount() {
@@ -151,7 +154,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuth: (email, password, authType) => dispatch(actions.onAuthUser(email, password, authType)),
+        onAuth: actions.onAuthUser,
         onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/profile'))
     };
 };

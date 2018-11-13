@@ -8,5 +8,9 @@ const Section = (props) => {
     );
 };
 
+/*
+ Это не hoc, просто врапер
+*/
+
 export default Section;
 

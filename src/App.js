@@ -41,12 +41,18 @@ const AuthedRoutes = () => {
         </Fragment>)
 };
 
+
+
 class App extends Component {
+                /*
+                    ^Лучше Юзать PureComponent вместо Component, чтобы не перерендеривался лишний раз
+                */
     componentDidMount() {
         this.props.onCheckAuth();
     }
 
     render() {
+        console.log('rendered');
         let router = (
             <Switch>
                 <Route path='/' exact component={BurgerBuilder}/>
@@ -79,5 +85,11 @@ const mapDispatchToProps = dispatch => {
         onCheckAuth: () => dispatch(actions.authCheckState())
     };
 };
+/*
+    ^Тут можно ебошить так, будет красивее
+    const mapDispatchToProps = {
+        onCheckAuth: actions.authCheckState
+    };
+*/
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
