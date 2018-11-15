@@ -40,19 +40,21 @@ const AuthedRoutes = () => {
             <Route path='/profile' exact component={asyncProfile}/>
         </Fragment>)
 };
-
+    /*
+          Отделить эти роуты в отдельную папку Routes в отдельный файл в ней
+     */
 
 
 class App extends Component {
                 /*
                     ^Лучше Юзать PureComponent вместо Component, чтобы не перерендеривался лишний раз
+                    UPD: тут можно не юзать, в принципе :)
                 */
     componentDidMount() {
         this.props.onCheckAuth();
     }
 
     render() {
-        console.log('rendered');
         let router = (
             <Switch>
                 <Route path='/' exact component={BurgerBuilder}/>

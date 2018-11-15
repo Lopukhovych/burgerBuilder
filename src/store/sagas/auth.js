@@ -71,7 +71,7 @@ export function* authCheckStateSaga(action) {
                 expirationDate: yield state.auth.expirationDate,
                 /*
                        ^Забыл добавить expirationDate: yield state.auth.expirationDate, поэтому оно было пустое и валило в логаут,
-                       а вообще зачем ты тут делаешь actions.authSuccess??
+                       а вообще зачем ты тут делаешь
                 */
             }));
             yield put(actions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
