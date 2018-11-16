@@ -47,6 +47,9 @@ class Auth extends Component {
             },
             formIsValid: false
         };
+        /*
+                Лучше логику с валидацией, єррор меседжем и прочей фигней засунуть в отдельный конфиг файл
+         */
     }
 
     componentDidMount() {

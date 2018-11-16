@@ -6,38 +6,41 @@ import classes from "./OrderItem.css";
 import ContactData from "../../Checkout/ContactData/ContactData";
 import {Redirect} from 'react-router-dom';
 
+class OrderItem extends React.Component {
 
-const OrderItem = (props) => {
-    let order = props.ordersList[props.match.params.order];
-
-    const checkoutCancelledHandler = () => {
-        props.history.goBack();
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
     };
 
-    const checkoutContinuedHandler = () => {
-        props.history.replace(`${props.location.pathname}/contact-data`);
+    checkoutContinuedHandler = () => {
+        this.props.history.replace(`${this.props.match.url}/contact-data`);
     };
-    if (!order) {
-        return <Redirect to="/not-found"/>
+
+    render () {
+        let order = this.props.ordersList[this.props.match.params.order];
+
+        if (!order) {
+            return <Redirect to="/not-found"/>
+        }
+        return (
+            <div className={classes.OrderItem}>
+                <h1 className={classes.titleMargin}>It is one of your orders!</h1>
+                <CheckoutSummary
+                    ingredients={order.ingredients}
+                    totalPrice={order.price}
+                    checkoutCancelled={this.checkoutCancelledHandler}
+                    checkoutContinued={this.checkoutContinuedHandler}
+                />
+                <Route path={this.props.match.url + '/contact-data'}
+                       render={routeProps =>
+                           <ContactData {...routeProps}
+                                        ingredients={order.ingredients}
+                                        totalPrice={order.price}
+                           />}
+                />
+            </div>
+        );
     }
-    return (
-        <div className={classes.OrderItem}>
-            <h1 className={classes.titleMargin}>It is one of your orders!</h1>
-            <CheckoutSummary
-                ingredients={order.ingredients}
-                totalPrice={order.price}
-                checkoutCancelled={checkoutCancelledHandler}
-                checkoutContinued={checkoutContinuedHandler}
-            />
-            <Route path={props.match.url + '/contact-data'}
-                   render={routeProps =>
-                       <ContactData {...routeProps}
-                                    ingredients={order.ingredients}
-                                    totalPrice={order.price}
-                       />}
-            />
-        </div>
-    );
 };
 
 const mapStateToProps = state => {

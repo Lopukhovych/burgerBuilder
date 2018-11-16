@@ -60,6 +60,7 @@ export function* authCheckStateSaga(action) {
         yield put(actions.authLogout());
     } else {
         const expirationDate = yield new Date(state.auth.expirationDate);
+        yield console.log('expirationDate',expirationDate);
         if (expirationDate < new Date()) {
             yield put(actions.authLogout());
         } else {
@@ -67,6 +68,11 @@ export function* authCheckStateSaga(action) {
                 email: yield state.auth.email,
                 token: yield state.auth.token,
                 id: yield state.auth.userId,
+                expirationDate: yield state.auth.expirationDate,
+                /*
+                       ^Забыл добавить expirationDate: yield state.auth.expirationDate, поэтому оно было пустое и валило в логаут,
+                       а вообще зачем ты тут делаешь
+                */
             }));
             yield put(actions.checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
         }

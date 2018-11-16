@@ -17,8 +17,6 @@ class Checkout extends React.Component {
         this.props.history.replace('/checkout/contact-data');
     };
 
-
-
     render() {
         if (!this.props.orderIngredients || this.props.purchased) {
             return <Redirect to='/'/>
